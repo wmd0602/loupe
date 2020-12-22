@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery.js"></script>
+    <style>
+        #wrap {
+            border: 1px solid;
+            width: 356px;
+            height: 356px;
+            position: relative;
+            float: left;
+            cursor: move;
+        }
+
+        #inner {
+            width: 100px;
+            height: 100px;
+            background-color: rgba(254, 138, 167, 0.4);
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+
+        #shows {
+            width: 400px;
+            height: 400px;
+            background-image: url("../dis/img/0001.jpg");
+            background-repeat: no-repeat;
+            border: 1px solid;
+            display: none;
+            float: left;
+        }
+        #box{
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div id="wrap">
+        <img src="../dis/img/001.jpg" alt="">
+        <div id="inner" style="display: none"></div>
+    </div>
+    <div id="shows"></div>
+</div>
+
+<script>
+    var left;
+    var top;
+    $(function () {
+        $('#wrap').mousemove(function (ev) {
+            $('#inner').css("display", "block");
+            $('#shows').css("display", "block");
+            var pageX = ev.pageX;
+            var pageY = ev.pageY;
+            var offsetX = $('#wrap').offset().left;
+            var offsetY = $('#wrap').offset().top;
+            var x = (pageX - offsetX) - 50;
+            var y = (pageY - offsetY) - 50;
+            if (x < 0) {
+                x = 0;
+            }
+            if(x>256){
+                x=256;
+            }
+            if (y < 0) {
+                y = 0;
+            }
+            if(y>256){
+                y=256;
+            }
+            $('#inner').css({left:x+"px",top:y+"px"});
+            $('#shows').css("backgroundPositionX", -400*(x/256)+ "px");
+            $('#shows').css("backgroundPositionY", -400*(y/256) + "px");
+        });
+        $('#wrap').mouseout(function () {
+            $('#inner').css("display", "none");
+            $('#shows').css("display", "none");
+
+        })
+    })
+</script>
+</body>
+</html>
